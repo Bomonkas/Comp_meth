@@ -78,8 +78,7 @@ void print_sys(TYPE** A, TYPE* B, const int size) {
 	}
 }
 
-void mult_m_n(TYPE **A, TYPE n, const int size)
-{
+void mult_m_n(TYPE **A, TYPE n, const int size) {
 	for (int i = 0; i < size; i++)
 		for (int j = 0; j < size; j++)
 			A[i][j] *= n;
@@ -132,14 +131,12 @@ TYPE norm_inf_v(TYPE *vec, const int size) {
 	return max;
 }
 
-void mult_v_n(TYPE *x, TYPE n, int size)
-{
+void mult_v_n(TYPE *x, TYPE n, int size) {
 	for (int i = 0; i < size; i++)
 		x[i] *= n;
 }
 
-void swap_v(TYPE **x, TYPE **y, int size)
-{
+void swap_v(TYPE **x, TYPE **y) {
 	TYPE *tmp;
 
 	tmp = *x;

@@ -1,7 +1,6 @@
 #include "slau.h"
 
-TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size)
-{
+TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size) {
     TYPE **B = new TYPE *[size];
     TYPE *c = new TYPE[size];
     TYPE *x = new TYPE[size];
@@ -31,7 +30,7 @@ TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size)
 				x1[i] += B[i][j] * x[j];
 			x1[i] += c[i];
         }
-		swap_v(&x1, &x, size);
+		swap_v(&x1, &x);
         h++;
 	} 
     cout << "Num = " << h << endl;
@@ -41,8 +40,7 @@ TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size)
     return (x);
 }
 
-TYPE *zey_iter(TYPE **A, TYPE *b, const int size)
-{
+TYPE *zey_iter(TYPE **A, TYPE *b, const int size) {
     TYPE **B = new TYPE *[size];
     TYPE *c = new TYPE[size];
     TYPE *x = new TYPE[size];
@@ -79,7 +77,7 @@ TYPE *zey_iter(TYPE **A, TYPE *b, const int size)
 			x1[i] += c[i];
             tmp[i] = x1[i];
         }
-		swap_v(&x1, &x, size);
+		swap_v(&x1, &x);
         h++;
 	} 
     cout << "Num = " << h << endl;
@@ -90,8 +88,7 @@ TYPE *zey_iter(TYPE **A, TYPE *b, const int size)
     return (x);
 }
 
-TYPE *rel_iter(TYPE **A, TYPE *b, const int size)
-{
+TYPE *rel_iter(TYPE **A, TYPE *b, const int size) {
     TYPE **B = new TYPE *[size];
     TYPE *c = new TYPE[size];
     TYPE *x = new TYPE[size];
@@ -130,7 +127,7 @@ TYPE *rel_iter(TYPE **A, TYPE *b, const int size)
             x1[i] = x1[i] + (w - 1) * (x1[i] - x[i]);
             tmp[i] = x1[i];
         }
-		swap_v(&x1, &x, size);
+		swap_v(&x1, &x);
         h++;
 	} 
     cout << "Num = " << h << endl;
@@ -141,8 +138,7 @@ TYPE *rel_iter(TYPE **A, TYPE *b, const int size)
     return (x);
 }
 
-TYPE *simple_iter(TYPE **A, TYPE *b, const int size)
-{
+TYPE *simple_iter(TYPE **A, TYPE *b, const int size) {
     TYPE **B = new TYPE *[size];
     TYPE *c = new TYPE[size];
     TYPE *x = new TYPE[size];
@@ -172,7 +168,7 @@ TYPE *simple_iter(TYPE **A, TYPE *b, const int size)
 				x1[i] += B[i][j] * x[j];
 			x1[i] += c[i];
         }
-        swap_v(&x1, &x, size);
+        swap_v(&x1, &x);
         h++;
 	} 
     cout << "Num = " << h << endl;

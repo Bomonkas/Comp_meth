@@ -19,7 +19,7 @@ TYPE*   reverse_move(TYPE** A, TYPE* B, const int size);
 TYPE*   gauss(TYPE** A, TYPE* B, const int size);
 void	mult_v_n(TYPE *x, TYPE n, int size);
 void	mult_m_n(TYPE **A, TYPE n, const int size);
-void    swap_v(TYPE **x, TYPE **y, const int size);
+void    swap_v(TYPE **x, TYPE **y);
 TYPE    norm_inf_v(TYPE *vec, const int size);
 TYPE    *diff_v(TYPE *x, TYPE *y, const int size);
 TYPE    norm_1_v(TYPE *vec, const int size);

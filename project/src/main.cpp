@@ -6,7 +6,7 @@ int main()
 {
     TYPE **A;
     TYPE *b;
-    int size = file_input(&A, &b, "test.TXT");
+    int size = file_input(&A, &b, "tests/T1.TXT");
 	if (size <= 0)
 		return (-1);
     print_sys(A, b, size);
