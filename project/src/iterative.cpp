@@ -4,21 +4,21 @@ TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size)
 {
     TYPE *x = new TYPE[size];
     TYPE *x1 = new TYPE[size];
-    TYPE **С = new TYPE *[size];
+    TYPE **C = new TYPE *[size];
 
     for (int i = 0; i < size; i++)
     {
-        С[i] = new TYPE[size];
+        C[i] = new TYPE[size];
         for (int j = 0; j < size; j++)
         {
             if (i != j)
-                С[i][j] = -A[i][j] / A[i][i];
+                C[i][j] = -A[i][j] / A[i][i];
             else
-                С[i][i] = 0;
+                C[i][i] = 0;
         }
         x[i] = b[i];
     }
-    TYPE norm = norm_1_m(С, size);
+    TYPE norm = norm_1_m(C, size);
     TYPE eps1 = (1 - norm) / norm * eps;
     TYPE nev = norm_1_v(diff_v(x1, x, size), size);
     int h = 0;
@@ -40,47 +40,55 @@ TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size)
     cout << setprecision(10) << "|"  << setw(13) << norm_1_v(diff_v(x1, x, size), size) 
     << "|" << setw(15) << eps1 << "|"<< setw(13) << h << "|" << setw(15) 
     << norm << "|"<< setw(12) << (int)(log(eps * (1 - norm) / nev) / log(norm)) << "|" << endl;
-    delete_m(С, size);
+    delete_m(C, size);
     delete[] x1;
     return (x);
 }
 
 TYPE **relax_m(TYPE **A, const int size, const TYPE w)
 {
-    TYPE **C;
-    TYPE **D;
-    TYPE **L;
+    TYPE *x = new TYPE[size];
+    TYPE **C = new TYPE*[size];
+    TYPE sum;
 
-    D = new TYPE*[size];
-    L = new TYPE*[size];
-    C = new TYPE*[size];
     for (int i = 0; i < size; i++)
     {
         C[i] = new TYPE[size];
-        D[i] = new TYPE[size];
-        L[i] = new TYPE[size];
+        x[i] = 0;
     }
+    for (int h = 0; h < size; h++)
+    {
+        x[h] = 1;
+        if (h != 0)
+            x[h - 1] = 0;
+        for (int i = 0; i < size; i++)
+		{
+            C[i][h] = 0;
+            sum = 0;
+			for (int j = 0; j < size; j++)
+            {
+                if (j < i)
+                    sum += A[i][j] * C[j][h];
+                else if(i != j)
+				    sum += A[i][j] * x[j];
+            }
+			C[i][h] = (1 - w) * C[i][h] - w * sum / A[i][i];
+        }
+    }
+    delete[]x;
+    return (C);
 }
 
 TYPE *zey_iter(TYPE **A, TYPE *b, const int size)
 {
-    TYPE **C = new TYPE *[size];
+    TYPE **C;
     TYPE *x = new TYPE[size];
     TYPE *x1 = new TYPE[size];
     TYPE *tmp = new TYPE[size];
 
     for (int i = 0; i < size; i++)
-    {
-        C[i] = new TYPE[size];
-        for (int j = 0; j < size; j++)
-        {
-            if (i != j)
-                C[i][j] = -A[i][j] / A[i][i];
-            else
-                C[i][i] = 0;
-        }
         x[i] = b[i];
-    }
+    C = relax_m(A, size, 1);
     TYPE norm = norm_1_m(C, size);
     TYPE eps1 = (1 - norm) / norm * eps;
     TYPE nev = norm_1_v(diff_v(x1, x, size), size);
@@ -115,23 +123,14 @@ TYPE *zey_iter(TYPE **A, TYPE *b, const int size)
 
 TYPE *rel_iter(TYPE **A, TYPE *b, const int size, const TYPE w)
 {
-    TYPE **C = new TYPE *[size];
+    TYPE **C;
     TYPE *x = new TYPE[size];
     TYPE *x1 = new TYPE[size];
     TYPE *tmp = new TYPE[size];
 
     for (int i = 0; i < size; i++)
-    {
-        C[i] = new TYPE[size];
-        for (int j = 0; j < size; j++)
-        {
-            if (i != j)
-                C[i][j] = -A[i][j] / A[i][i];
-            else
-                C[i][i] = 0;
-        }
         x[i] = b[i];
-    }
+    C = relax_m(A, size, w);
     TYPE norm = norm_1_m(C, size);
     TYPE eps1 = (1 - norm) / norm * eps;
     TYPE nev = norm_1_v(diff_v(x1, x, size), size);
@@ -141,7 +140,7 @@ TYPE *rel_iter(TYPE **A, TYPE *b, const int size, const TYPE w)
 		for (int i = 0; i < size; i++)
 		{
             x1[i] = 0;
-			for (int j = 0; j < i; j++)
+			for (int j = 0; j < size; j++)
             {
                 if (j < i)
                     x1[i] -= w * A[i][j] / A[i][i] * tmp[j];
@@ -194,7 +193,7 @@ TYPE *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau)
                 if (i != j)
                     x1[i] += -tau * A[i][j] * x[j];
                 else
-                    x1[i] += -tau * A[i][j] * x[j] + 1;
+                    x1[i] += (-tau * A[i][j] + 1) * x[j];
             }
 			x1[i] += b[i] * tau;
         }
@@ -208,4 +207,3 @@ TYPE *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau)
     delete[] x1;
     return (x);
 }
-
