@@ -1,4 +1,4 @@
-TARGET = main.out
+TARGET = l
 
 HDRS = \
 	   project/include
@@ -11,8 +11,8 @@ SRCS = \
 .PHONY: all clean
 
 all: $(SRCS)
-	$(CXX) -Wall -Wextra -Werror -I $(HDRS) -o $(TARGET) $(CXXFLAGS) $(SRCS)
-
+	$(CXX) -Wall -Wextra -Werror -I $(HDRS) -o $(TARGET) $(CXXFLAGS) $(SRCS) 
+	./$(TARGET)
 clean:
 	rm -rf $(TARGET)
 
