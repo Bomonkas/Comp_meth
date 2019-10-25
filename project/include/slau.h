@@ -11,9 +11,10 @@
 
 using namespace std;
 
-TYPE 	*rel_iter(TYPE **A, TYPE *b, const int size);
+TYPE 	*rel_iter(TYPE **A, TYPE *b, const int size, const TYPE w);
 TYPE 	*zey_iter(TYPE **A, TYPE *b, const int size);
-TYPE    *simple_iter(TYPE **A, TYPE *b, const int size);
+TYPE    *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau);
+TYPE    *yacoby_iter(TYPE **A, TYPE *B, const int size);
 int	    find_and_swap(TYPE** A, TYPE* B, int k, const int size);
 TYPE*   reverse_move(TYPE** A, TYPE* B, const int size);
 TYPE*   gauss(TYPE** A, TYPE* B, const int size);
@@ -23,7 +24,6 @@ void    swap_v(TYPE **x, TYPE **y);
 TYPE    norm_inf_v(TYPE *vec, const int size);
 TYPE    *diff_v(TYPE *x, TYPE *y, const int size);
 TYPE    norm_1_v(TYPE *vec, const int size);
-TYPE    *yacoby_iter(TYPE **A, TYPE *B, const int size);
 TYPE    norm_1_m(TYPE **A, const int size);
 TYPE    norm_inf_m(TYPE **A, const int size);
 void    print_sys_iter(TYPE** A, TYPE* c, const int size);
