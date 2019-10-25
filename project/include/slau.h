@@ -11,11 +11,13 @@
 
 using namespace std;
 
-TYPE    **relax_m(TYPE **A, const int size, const TYPE w);
-TYPE 	*rel_iter(TYPE **A, TYPE *b, const int size, const TYPE w);
-TYPE 	*zey_iter(TYPE **A, TYPE *b, const int size);
+TYPE    **yacoby_matr_c(TYPE **A, const int size);
+TYPE    **simple_iter_matr_c(TYPE **A, const int size, const TYPE tau);
+TYPE    **relax_matr_c(TYPE **A, const int size, const TYPE w);
+TYPE 	*relax(TYPE **A, TYPE *b, const int size, const TYPE w);
+TYPE 	*zeydel(TYPE **A, TYPE *b, const int size);
 TYPE    *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau);
-TYPE    *yacoby_iter(TYPE **A, TYPE *B, const int size);
+TYPE    *yacoby(TYPE **A, TYPE *B, const int size);
 int	    find_and_swap(TYPE** A, TYPE* B, int k, const int size);
 TYPE    *reverse_move(TYPE** A, TYPE* B, const int size);
 TYPE    *gauss(TYPE** A, TYPE* B, const int size);
