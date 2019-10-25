@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
-#include <math.h>
+#include <cmath>
 
 #define TYPE double
 #define eps 0.001
