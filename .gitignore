@@ -1,3 +1,7 @@
 *.[out]
+<<<<<<< HEAD
 *.exe
 l
+=======
+*.exe
+>>>>>>> gitignore -> *.exe
