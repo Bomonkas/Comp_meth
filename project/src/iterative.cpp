@@ -45,6 +45,25 @@ TYPE *yacoby_iter(TYPE **A, TYPE *b, const int size)
     return (x);
 }
 
+TYPE    **relax_m(TYPE **A, const int size, const TYPE w)
+{
+    TYPE **C;
+    TYPE **D;
+    TYPE **L;
+
+    D = new TYPE*[size];
+    L = new TYPE*[size];
+    C = new TYPE*[size];
+    for (int i = 0; i < size; i++)
+    {
+        C[i] = new TYPE[size];
+        D[i] = new TYPE[size];
+        L[i] = new TYPE[size];
+    }
+    
+    
+}
+
 TYPE *zey_iter(TYPE **A, TYPE *b, const int size)
 {
     TYPE **B = new TYPE *[size];

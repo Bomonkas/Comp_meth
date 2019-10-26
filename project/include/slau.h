@@ -11,6 +11,7 @@
 
 using namespace std;
 
+TYPE    **relax_m(TYPE **A, const int size, const TYPE w);
 TYPE 	*rel_iter(TYPE **A, TYPE *b, const int size, const TYPE w);
 TYPE 	*zey_iter(TYPE **A, TYPE *b, const int size);
 TYPE    *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau);
