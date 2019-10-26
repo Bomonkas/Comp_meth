@@ -143,9 +143,13 @@ TYPE *rel_iter(TYPE **A, TYPE *b, const int size, const TYPE w)
             x1[i] = 0;
 			for (int j = 0; j < i; j++)
             {
-				x1[i] -= w * A[i][j] / A[i][i] * x1[j];
+                if (j < i)
+                    x1[i] -= w * A[i][j] / A[i][i] * tmp[j];
+                else if(i != j)
+				    x1[i] -= w * A[i][j] / A[i][i] * x[j];
             }
-            x1[i] += (1 - w) * x[i] + w * b[i] / A[i][i];
+			x1[i] += w * b[i] / A[i][i] + (1 - w) * x[i];
+            tmp[i] = x1[i];
         }
 		swap_v(&x1, &x);
         h++;
