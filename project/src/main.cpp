@@ -6,7 +6,11 @@ int main()
 {
     TYPE **A;
     TYPE *b;
+    TYPE **big;
 
+    big = create_big_matr(-194);
+    print_big_matr(big, -194);
+    return (0);
     int size = file_input(&A, &b, "tests/ITER.txt");
 	if (size <= 0)
 		return (-1);

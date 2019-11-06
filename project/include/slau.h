@@ -40,3 +40,5 @@ TYPE    **transp_m(TYPE** matr, int size);
 TYPE    *mult_m_v(TYPE** matr, TYPE* vec, const int size);
 TYPE    **mult_m_m(TYPE** l_matr, TYPE** r_matr, const int size);
 void    print_m(TYPE** matr, const int size);
+TYPE    **create_big_matr(int num);
+void    print_big_matr(TYPE **A, int num);
