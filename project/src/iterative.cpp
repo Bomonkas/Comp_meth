@@ -1,5 +1,76 @@
 #include "slau.h"
 
+void print_big_matr(TYPE **A, int num)
+{
+    int n = 200 + num;
+    TYPE **L;
+    TYPE *l;
+    l = new TYPE[n];
+    L = new TYPE*[n];
+    for (int i = 0; i < n; i++)
+    {
+        L[i] = new TYPE[n];
+        for (int j = 0; j < n; j++)
+        {
+            if (i == j)
+            {
+            //   cout << A[1][j] << " ";
+                L[i][j] = A[1][j];
+            }
+            else if (i == j + 1)
+            {
+            //    cout << A[0][j] << " ";
+                L[i][j] = A[0][j];
+            }
+            else if (i == j - 1)
+            {
+            //    cout << A[2][j] << " ";
+                L[i][j] = A[2][j];
+            }
+            else
+            {
+            //    cout << "0" << " ";
+                L[i][j] = 0;
+            }
+        }
+        //cout << A[3][i] << endl;
+        l[i] = A[3][i];
+    }
+   // print_sys(L, l, n);
+    cout << "I have this :" << endl;
+    print_m(L, n);
+    cout << endl;
+    L = relax_matr_c(L, n, 1);
+    cout << "I want to get this : " << endl;
+    print_m(L, n);
+    delete_m(L, n);
+    delete(l);
+}
+
+TYPE **create_big_matr(int num)
+{
+    TYPE **A;
+    int n = 200 + num;
+
+    A = new TYPE*[4];
+    A[0] = new TYPE[n - 1];
+    A[1] = new TYPE[n];
+    A[2] = new TYPE[n - 1];
+    A[3] = new TYPE[n];
+    for (int j = 0; j < n; j++)
+    {
+        A[1][j] = 4;
+        A[0][j] = 1;
+        A[2][j] = 1;
+        if (j == 0)
+            A[3][j] = 6;
+        else if (j == n - 1)
+            A[3][j] = 9 - 3 * (n % 2);
+        else
+            A[3][j] = 10 - 2 * ((j + 1) % 2);
+    }
+    return (A);
+}
 
 TYPE **relax_matr_c(TYPE **A, const int size, const TYPE w)
 {

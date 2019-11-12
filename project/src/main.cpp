@@ -70,6 +70,7 @@ int main()
     cout << "X_5 = ";
     print_v(rel_vec_5, size);
 
+    print_big_matr(create_big_matr(-195), -195);
     delete(b);
     delete_m(A, size);
     return (0);
