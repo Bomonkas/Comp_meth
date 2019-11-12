@@ -7,6 +7,7 @@
 #include <cmath>
 
 #define TYPE double
+
 #define eps 0.001
 
 using namespace std;
@@ -14,10 +15,10 @@ using namespace std;
 TYPE    **yacoby_matr_c(TYPE **A, const int size);
 TYPE    **simple_iter_matr_c(TYPE **A, const int size, const TYPE tau);
 TYPE    **relax_matr_c(TYPE **A, const int size, const TYPE w);
-TYPE 	*relax(TYPE **A, TYPE *b, const int size, const TYPE w);
-TYPE 	*zeydel(TYPE **A, TYPE *b, const int size);
-TYPE    *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau);
-TYPE    *yacoby(TYPE **A, TYPE *B, const int size);
+TYPE 	*relax(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE w);
+TYPE 	*zeydel(TYPE **A, TYPE *b, TYPE *x_real, const int size);
+TYPE    *simple_iter(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE tau);
+TYPE    *yacoby(TYPE **A, TYPE *B, TYPE *x_real, const int size);
 int	    find_and_swap(TYPE** A, TYPE* B, int k, const int size);
 TYPE    *reverse_move(TYPE** A, TYPE* B, const int size);
 TYPE    *gauss(TYPE** A, TYPE* B, const int size);
@@ -40,3 +41,7 @@ TYPE    **transp_m(TYPE** matr, int size);
 TYPE    *mult_m_v(TYPE** matr, TYPE* vec, const int size);
 TYPE    **mult_m_m(TYPE** l_matr, TYPE** r_matr, const int size);
 void    print_m(TYPE** matr, const int size);
+TYPE    **create_big_matr(int num);
+void    print_big_matr(TYPE **A, int num);
+TYPE    **copy_m(TYPE **matr, const int size);
+TYPE    *copy_v(TYPE *vec, const int size);

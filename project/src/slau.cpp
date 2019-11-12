@@ -1,4 +1,4 @@
-#include "slau.h"
+﻿#include "slau.h"
 
 int file_input(TYPE ***A, TYPE **B, string name_file)
 {
@@ -27,6 +27,36 @@ int file_input(TYPE ***A, TYPE **B, string name_file)
 	}
 	file.close();
 	return (size);
+}
+
+void delete_m(TYPE **matr, const int size) {
+	if (!matr) {
+		cout << "Matrix is not exist\n";
+		return;
+	}
+	for (int i = 0; i < size; i++) {
+		delete[] matr[i];
+	}
+	delete[] matr;
+}
+
+TYPE **copy_m(TYPE **matr, const int size) {
+	TYPE **copy_matr = new TYPE*[size];
+	for (int i = 0; i < size; i++) {
+		copy_matr[i] = new TYPE[size];
+		for (int j = 0; j < size; j++) {
+			copy_matr[i][j] = matr[i][j];
+		}
+	}
+	return copy_matr;
+}
+
+TYPE *copy_v(TYPE *vec, const int size) {
+	TYPE *copy_vec = new TYPE[size];
+	for (int i = 0; i < size; i++) {
+		copy_vec[i] = vec[i];
+	}
+	return copy_vec;
 }
 
 TYPE norm_1_m(TYPE **A, const int size)
@@ -66,13 +96,6 @@ TYPE norm_inf_m(TYPE **A, const int size)
 			norm = sum;
 	}
 	return (norm);
-}
-
-void delete_m(TYPE **matr, const int size)
-{
-	for (int i = 0; i < size; i++)
-		delete[] matr[i];
-	delete[] matr;
 }
 
 void print_sys(TYPE **A, TYPE *B, const int size)
@@ -287,26 +310,25 @@ TYPE *reverse_move(TYPE **A, TYPE *B, const int size)
 	return (result);
 }
 
-TYPE *gauss(TYPE **A, TYPE *B, const int size)
-{
-	if (!A || !B)
-	{
+
+TYPE *gauss(TYPE **A_, TYPE *B_, const int size) {
+
+	TYPE **A = copy_m(A_, size);
+	TYPE *B = copy_v(B_, size);
+
+	if (!A || !B) {
 		cout << "Matrix is not exist\n";
-		return (nullptr);
+		return nullptr;
 	}
 	TYPE koff = 0;
-	for (int k = 0; k < size; k++)
-	{
-		if (find_and_swap(A, B, k, size))
-		{
+	for (int k = 0; k < size; k++) {
+		if (find_and_swap(A, B, k, size)) {
 			cout << "The matrix is degenerate" << endl;
-			return (nullptr);
+			return nullptr;
 		}
-		for (int j = k + 1; j < size; j++)
-		{
+		for (int j = k + 1; j < size; j++) {
 			koff = A[j][k] / A[k][k];
-			for (int i = k; i < size; i++)
-			{
+			for (int i = k; i < size; i++) {
 				if (i == k)
 					A[j][i] = 0.0;
 				else
@@ -315,9 +337,16 @@ TYPE *gauss(TYPE **A, TYPE *B, const int size)
 					A[i][j] = 0.0;
 			}
 			B[j] -= koff * B[k];
-			if (is_zero(B[j]))
+			if (is_zero(B[j])) {
 				B[j] = 0.0;
+			}
 		}
 	}
-	return (reverse_move(A, B, size));
+	//print_system(A, B, size);
+	TYPE *X = reverse_move(A, B, size);
+	//print_vec(X, size);
+
+	delete_m(A, size);
+	delete[] B;
+	return X;
 }

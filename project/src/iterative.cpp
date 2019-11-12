@@ -3,7 +3,7 @@
 
 TYPE **relax_matr_c(TYPE **A, const int size, const TYPE w)
 {
-   TYPE *x = new TYPE[size];
+    TYPE *x = new TYPE[size];
     TYPE **C = new TYPE*[size];
     TYPE sum;
 
@@ -28,7 +28,7 @@ TYPE **relax_matr_c(TYPE **A, const int size, const TYPE w)
                 else if(i != j)
 				    sum += A[i][j] * x[j];
             }
-			C[i][h] = (1 - w) * C[i][h] - w * sum / A[i][i];
+			C[i][h] = (1 - w) * x[i] - w * sum / A[i][i];
         }
     }
     delete[]x;
@@ -65,7 +65,7 @@ TYPE **simple_iter_matr_c(TYPE **A, const int size, const TYPE tau)
     return (C);
 }
 
-TYPE *yacoby(TYPE **A, TYPE *b, const int size)
+TYPE *yacoby(TYPE **A, TYPE *b, TYPE *x_real, const int size)
 {
     TYPE *x = new TYPE[size];
     TYPE *x1 = new TYPE[size];
@@ -76,7 +76,7 @@ TYPE *yacoby(TYPE **A, TYPE *b, const int size)
     C = yacoby_matr_c(A, size);
     TYPE norm = norm_1_m(C, size);
     TYPE eps1 = abs(1 - norm) / norm * eps;
-    TYPE nev = norm_1_v(diff_v(x1, x, size), size);
+    TYPE nev;
     int h = 0;
     while (norm_1_v(diff_v(x1, x, size), size) > eps1)
     {
@@ -91,17 +91,20 @@ TYPE *yacoby(TYPE **A, TYPE *b, const int size)
             x1[i] += b[i] / A[i][i];
         }
         swap_v(&x1, &x);
+        if (h == 0)
+            nev = norm_1_v(diff_v(x1, x_real, size), size);
         h++;
     }
+    TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
     cout << setprecision(10) << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
-         << "|" << setw(15) << eps1 << "|" << setw(13) << h << "|" << setw(15)
-         << norm << "|" << setw(12) << (int)(log(eps * abs(1 - norm) / nev) / log(norm)) << "|" << endl;
+         << "|" << setw(15) << norm_error << "|" << setw(13) << h << "|" << setw(15)
+         << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
     return (x);
 }
 
-TYPE *zeydel(TYPE **A, TYPE *b, const int size)
+TYPE *zeydel(TYPE **A, TYPE *b, TYPE *x_real, const int size)
 {
     TYPE **C;
     TYPE *x = new TYPE[size];
@@ -113,7 +116,7 @@ TYPE *zeydel(TYPE **A, TYPE *b, const int size)
     C = relax_matr_c(A, size, 1);
     TYPE norm = norm_1_m(C, size);
     TYPE eps1 = abs(1 - norm) / norm * eps;
-    TYPE nev = norm_1_v(diff_v(x1, x, size), size);
+    TYPE nev;
     int h = 0;
     while (norm_1_v(diff_v(x1, x, size), size) > eps1)
     {
@@ -132,18 +135,21 @@ TYPE *zeydel(TYPE **A, TYPE *b, const int size)
             tmp[i] = x1[i];
         }
         swap_v(&x1, &x);
+        if (h == 0)
+            nev = norm_1_v(diff_v(x_real, x1, size), size);
         h++;
     }
+    TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
     cout << setprecision(10) << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
-         << "|" << setw(15) << eps1 << "|" << setw(13) << h << "|" << setw(15)
-         << norm << "|" << setw(12) << (int)(log(eps * abs(1 - norm) / nev) / log(norm)) << "|" << endl;
+         << "|" << setw(15) << norm_error << "|" << setw(13) << h << "|" << setw(15)
+         << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
     delete[] tmp;
     return (x);
 }
 
-TYPE *relax(TYPE **A, TYPE *b, const int size, const TYPE w)
+TYPE *relax(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE w)
 {
     TYPE **C;
     TYPE *x = new TYPE[size];
@@ -155,7 +161,7 @@ TYPE *relax(TYPE **A, TYPE *b, const int size, const TYPE w)
     C = relax_matr_c(A, size, w);
     TYPE norm = norm_1_m(C, size);
     TYPE eps1 = abs(1 - norm) / norm * eps;
-    TYPE nev = norm_1_v(diff_v(x1, x, size), size);
+    TYPE nev;
     int h = 0;
     while (norm_1_v(diff_v(x1, x, size), size) > eps1)
 	{
@@ -173,18 +179,21 @@ TYPE *relax(TYPE **A, TYPE *b, const int size, const TYPE w)
             tmp[i] = x1[i];
         }
 		swap_v(&x1, &x);
+        if (h == 0)
+            nev = norm_1_v(diff_v(x1, x_real, size), size);
         h++;
     }
+    TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
     cout << "|" << setw(13) << w  << setprecision(10) << "|"  << setw(13) << norm_1_v(diff_v(x1, x, size), size) 
-    << "|" << setw(15) << eps1 << "|"<< setw(13) << h << "|" << setw(15) 
-    << norm << "|" << setw(12) << (int)(log(eps * abs(1 - norm) / nev) / log(norm)) << "|" << endl;
+    << "|" << setw(15) << norm_error << "|"<< setw(13) << h << "|" << setw(15) 
+    << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
     delete[] tmp;
     return (x);
 }
 
-TYPE *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau)
+TYPE *simple_iter(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE tau)
 {
     TYPE **C;
     TYPE *x = new TYPE[size];
@@ -196,7 +205,7 @@ TYPE *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau)
     C = simple_iter_matr_c(A, size, tau);
     TYPE norm = norm_1_m(C, size);
     TYPE eps1 = abs(1 - norm) / norm * eps;
-    TYPE nev = norm_1_v(diff_v(x1, x, size), size);
+    TYPE nev;
     while (norm_1_v(diff_v(x1, x, size), size) > eps1)
     {
         for (int i = 0; i < size; i++)
@@ -212,11 +221,14 @@ TYPE *simple_iter(TYPE **A, TYPE *b, const int size, const TYPE tau)
             x1[i] += b[i] * tau;
         }
         swap_v(&x1, &x);
+        if (h == 0)
+            nev = norm_1_v(diff_v(x1, x_real, size), size);
         h++;
     }
+    TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
     cout << setprecision(10) << "|" << setw(13) << tau << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
-         << "|" << setw(15) << eps1 << "|" << setw(13) << h << "|" << setw(15)
-         << norm << "|" << setw(12) << (int)(log(eps * abs(1 - norm) / nev) / log(norm)) << "|" << endl;
+         << "|" << setw(15) << norm_error << "|" << setw(13) << h << "|" << setw(15)
+         << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
     return (x);
