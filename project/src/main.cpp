@@ -16,12 +16,12 @@ int main()
     print_v(X, size);
 
     TYPE *x_real = new TYPE[size];
-    
+    x_real = X;
     print_sys(A, b, size);
-    for (int i = 0; i < size; i++) {
-        cout << "x_real[" << i << "] = ";
-        cin >> x_real[i];
-    }
+    // for (int i = 0; i < size; i++) {
+    //     cout << "x_real[" << i << "] = ";
+    //     cin >> x_real[i];
+    // }
     cout << "x_real = ";
     print_v(x_real, size);
 

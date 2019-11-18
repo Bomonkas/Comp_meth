@@ -167,8 +167,11 @@ TYPE *yacoby(TYPE **A, TYPE *b, TYPE *x_real, const int size)
         h++;
     }
     TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
-    cout << setprecision(10) << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
-         << "|" << setw(15) << norm_error << "|" << setw(13) << h << "|" << setw(15)
+    cout << setprecision(3) << "|" << setw(13) << scientific << norm_1_v(diff_v(x1, x, size), size)
+         << "|" << setw(15) << norm_error;
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+    cout << "|" << setw(13) << h << "|" << setw(15)
          << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
@@ -211,8 +214,11 @@ TYPE *zeydel(TYPE **A, TYPE *b, TYPE *x_real, const int size)
         h++;
     }
     TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
-    cout << setprecision(10) << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
-         << "|" << setw(15) << norm_error << "|" << setw(13) << h << "|" << setw(15)
+    cout << setprecision(3) << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
+         << "|" << setw(15) << norm_error;
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+    cout << "|" << setw(13) << h << "|" << setw(15)
          << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
@@ -255,8 +261,11 @@ TYPE *relax(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE w)
         h++;
     }
     TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
-    cout << "|" << setw(13) << w  << setprecision(10) << "|"  << setw(13) << norm_1_v(diff_v(x1, x, size), size) 
-    << "|" << setw(15) << norm_error << "|"<< setw(13) << h << "|" << setw(15) 
+    cout << "|" << setw(13) << w << setprecision(3) <<scientific << "|"  << setw(13) << norm_1_v(diff_v(x1, x, size), size) 
+    << "|" << setw(15) << norm_error;
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+    cout << "|"<< setw(13) << h << "|" << setw(15) 
     << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
@@ -297,8 +306,11 @@ TYPE *simple_iter(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE ta
         h++;
     }
     TYPE norm_error = norm_1_v(diff_v(x, x_real, size), size);
-    cout << setprecision(10) << "|" << setw(13) << tau << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
-         << "|" << setw(15) << norm_error << "|" << setw(13) << h << "|" << setw(15)
+    cout << setprecision(3) << "|" << setw(13) << tau << "|" << setw(13) << norm_1_v(diff_v(x1, x, size), size)
+         << "|" << setw(15) << norm_error;
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+    cout << "|" << setw(13) << h << "|" << setw(15)
          << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
