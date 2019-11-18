@@ -171,7 +171,7 @@ TYPE *yacoby(TYPE **A, TYPE *b, TYPE *x_real, const int size)
          << "|" << setw(15) << norm_error;
     cout.setf(ios::fixed, ios::floatfield);
     cout.setf(ios::showpoint);
-    cout << "|" << setw(13) << h << "|" << setw(15)
+    cout << setprecision(10) << "|" << setw(13) << h << "|" << setw(15)
          << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
@@ -218,7 +218,7 @@ TYPE *zeydel(TYPE **A, TYPE *b, TYPE *x_real, const int size)
          << "|" << setw(15) << norm_error;
     cout.setf(ios::fixed, ios::floatfield);
     cout.setf(ios::showpoint);
-    cout << "|" << setw(13) << h << "|" << setw(15)
+    cout << setprecision(10) << "|" << setw(13) << h << "|" << setw(15)
          << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
@@ -265,7 +265,7 @@ TYPE *relax(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE w)
     << "|" << setw(15) << norm_error;
     cout.setf(ios::fixed, ios::floatfield);
     cout.setf(ios::showpoint);
-    cout << "|"<< setw(13) << h << "|" << setw(15) 
+    cout << setprecision(10) << "|"<< setw(13) << h << "|" << setw(15) 
     << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
@@ -310,7 +310,7 @@ TYPE *simple_iter(TYPE **A, TYPE *b, TYPE *x_real, const int size, const TYPE ta
          << "|" << setw(15) << norm_error;
     cout.setf(ios::fixed, ios::floatfield);
     cout.setf(ios::showpoint);
-    cout << "|" << setw(13) << h << "|" << setw(15)
+    cout << setprecision(10) << "|" << setw(13) << h << "|" << setw(15)
          << norm << "|" << setw(12) << (int)(log(eps1 / nev) / log(norm)) << "|" << endl;
     delete_m(C, size);
     delete[] x1;
